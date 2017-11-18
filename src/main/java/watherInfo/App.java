@@ -28,7 +28,9 @@ public class App
         for(String city : cites){
             StringBuilder result = new StringBuilder();
             String urlString = createStringURL(city);
+
             getDataFromURL(result, urlString);
+
             Map<String, Object> responseMap = jsonToMap(result.toString());
             Map<String, Object> mainMap = jsonToMap(responseMap.get("main").toString());
             citesOfMinTemp.put(city, (Double) mainMap.get("temp_min"));
@@ -36,25 +38,25 @@ public class App
             citesMaxRangeOfTemp.put(city, (Double)mainMap.get("temp_max") - (Double)mainMap.get("temp_min"));
         }
 
-        Map<String, Double> temporary = new HashMap<String, Double>();
+        List<String> temporaryMap = new ArrayList<String>();
 
-        System.out.println(citesOfMinTemp);
-        getCityWithMinTemperature(citesOfMinTemp, temporary);
-        System.out.println("The city with the lowest minimum temperature : " + temporary);
-        temporary.clear();
+//        System.out.println(citesOfMinTemp); //for view all cites With Min Temp
+        getCityWithMinTemperature(citesOfMinTemp, temporaryMap);
+        System.out.println("The city with the lowest minimum temperature : " + temporaryMap.get(0));
+        temporaryMap.clear();
 
-        System.out.println(citesOfMaxTemp);
-        getCityWithMaxTemperature(citesOfMaxTemp, temporary);
-        System.out.println("The city with the highest maximum temperature : " + temporary);
-        temporary.clear();
+//        System.out.println(citesOfMaxTemp); //for view all cites With Max Temp
+        getCityWithMaxTemperature(citesOfMaxTemp, temporaryMap);
+        System.out.println("The city with the highest maximum temperature : " + temporaryMap.get(0));
+        temporaryMap.clear();
 
-        System.out.println(citesMaxRangeOfTemp);
-        getCityWithGreaterTemperatureRange(citesMaxRangeOfTemp, temporary);
-        System.out.println("The city with the greater temperature range : " + temporary);
-        temporary.clear();
+//        System.out.println(citesMaxRangeOfTemp); //for view all cites With greater temperature range
+        getCityWithGreaterTemperatureRange(citesMaxRangeOfTemp, temporaryMap);
+        System.out.println("The city with the greater temperature range : " + temporaryMap.get(0));
+        temporaryMap.clear();
     }
 
-    private static void getCityWithGreaterTemperatureRange(Map<String, Double> citesMaxRangeOfTemp, Map<String, Double> temporary) {
+    private static void getCityWithGreaterTemperatureRange(Map<String, Double> citesMaxRangeOfTemp, List<String> temporary) {
         Double maxCityOfMaxRangeTemp = 0.0;
         Set< Map.Entry<String, Double>> citesMaxRangeOfTempSet = citesMaxRangeOfTemp.entrySet();
         for(Map.Entry<String, Double> me:citesMaxRangeOfTempSet) {
@@ -62,12 +64,12 @@ public class App
                 maxCityOfMaxRangeTemp = me.getValue();
         }
         for(Map.Entry<String, Double> me:citesMaxRangeOfTempSet) {
-            if(me.getValue() == maxCityOfMaxRangeTemp)
-                temporary.put(me.getKey(), me.getValue());
+            if(me.getValue().equals(maxCityOfMaxRangeTemp))
+                temporary.add(me.getKey());
         }
     }
 
-    private static void getCityWithMaxTemperature(Map<String, Double> citesOfMaxTemp, Map<String, Double> temporary) {
+    private static void getCityWithMaxTemperature(Map<String, Double> citesOfMaxTemp, List<String> temporary) {
         Double maxCityOfMaxTemp = -1000.0;
         Set< Map.Entry<String, Double>> citesOfMaxTempSet = citesOfMaxTemp.entrySet();
         for(Map.Entry<String, Double> me:citesOfMaxTempSet) {
@@ -75,12 +77,12 @@ public class App
                 maxCityOfMaxTemp = me.getValue();
         }
         for(Map.Entry<String, Double> me:citesOfMaxTempSet) {
-            if(me.getValue() == maxCityOfMaxTemp)
-        temporary.put(me.getKey(), me.getValue());
+            if(me.getValue().equals(maxCityOfMaxTemp))
+        temporary.add(me.getKey());
     }
     }
 
-    private static void getCityWithMinTemperature(Map<String, Double> citesOfMinTemp, Map<String, Double> temporary) {
+    private static void getCityWithMinTemperature(Map<String, Double> citesOfMinTemp, List<String> temporary) {
         Double maxCityOfMinTemp = 1000.0;
         Set< Map.Entry<String, Double>> citesOfMinTempSet = citesOfMinTemp.entrySet();
         for(Map.Entry<String, Double> me:citesOfMinTempSet) {
@@ -88,8 +90,8 @@ public class App
                 maxCityOfMinTemp = me.getValue();
         }
         for(Map.Entry<String, Double> me:citesOfMinTempSet) {
-            if(me.getValue() == maxCityOfMinTemp)
-                temporary.put(me.getKey(), me.getValue());
+            if(me.getValue().equals(maxCityOfMinTemp))
+                temporary.add(me.getKey());
         }
     }
 
