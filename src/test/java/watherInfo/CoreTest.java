@@ -2,6 +2,8 @@ package watherInfo;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class CoreTest {
@@ -37,7 +39,8 @@ public class CoreTest {
     @Test
     public void getDataFromFile() throws Exception {
         Core core = new Core();
-        assertTrue(!core.getDataFromFile().isEmpty());
+        List<String> s = core.getDataFromFile();
+        assertFalse(s.isEmpty());
     }
 
 }
