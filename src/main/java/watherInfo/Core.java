@@ -11,15 +11,15 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
 
-public class App
-{
-    private static Map<String, Object> jsonToMap(String str){
+public class Core {
+
+    public    Map<String, Object> jsonToMap(String str){
         return new Gson().fromJson(
                 str, new TypeToken<HashMap<String, Object>>(){}.getType()
         );
     }
 
-    public static void main( String[] args )
+    public void init()
     {
         List<String> cites = getDataFromFile();
         Map<String, Double> citesOfMinTemp = new HashMap<String, Double>();
@@ -56,7 +56,7 @@ public class App
         temporaryMap.clear();
     }
 
-    private static void getCityWithGreaterTemperatureRange(Map<String, Double> citesMaxRangeOfTemp, List<String> temporary) {
+    public  void getCityWithGreaterTemperatureRange(Map<String, Double> citesMaxRangeOfTemp, List<String> temporary) {
         Double maxCityOfMaxRangeTemp = 0.0;
         Set< Map.Entry<String, Double>> citesMaxRangeOfTempSet = citesMaxRangeOfTemp.entrySet();
         for(Map.Entry<String, Double> me:citesMaxRangeOfTempSet) {
@@ -69,7 +69,7 @@ public class App
         }
     }
 
-    private static void getCityWithMaxTemperature(Map<String, Double> citesOfMaxTemp, List<String> temporary) {
+    public  void getCityWithMaxTemperature(Map<String, Double> citesOfMaxTemp, List<String> temporary) {
         Double maxCityOfMaxTemp = -1000.0;
         Set< Map.Entry<String, Double>> citesOfMaxTempSet = citesOfMaxTemp.entrySet();
         for(Map.Entry<String, Double> me:citesOfMaxTempSet) {
@@ -82,7 +82,7 @@ public class App
     }
     }
 
-    private static void getCityWithMinTemperature(Map<String, Double> citesOfMinTemp, List<String> temporary) {
+    public  void getCityWithMinTemperature(Map<String, Double> citesOfMinTemp, List<String> temporary) {
         Double maxCityOfMinTemp = 1000.0;
         Set< Map.Entry<String, Double>> citesOfMinTempSet = citesOfMinTemp.entrySet();
         for(Map.Entry<String, Double> me:citesOfMinTempSet) {
@@ -95,7 +95,7 @@ public class App
         }
     }
 
-    private static String createStringURL(String name) {
+    public  String createStringURL(String name) {
         String api_KEY = "619e23437c293f2daeffbdca424ae23f";
         String units = "metric"; //metric or Imperial
         return "http://api.openweathermap.org/data/2.5/weather?q=" +
@@ -103,7 +103,7 @@ public class App
                 api_KEY+"&units=" + units;
     }
 
-    private static void getDataFromURL(StringBuilder result, String urlString) {
+    public  void getDataFromURL(StringBuilder result, String urlString) {
         try {
             URL url = new URL(urlString);
             URLConnection conn = url.openConnection();
@@ -120,7 +120,7 @@ public class App
         }
     }
 
-    private static List<String> getDataFromFile() {
+    public  List<String> getDataFromFile() {
         BufferedReader br = null;
         List<String> cites = new ArrayList<String>();
         try {
