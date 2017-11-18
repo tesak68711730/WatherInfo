@@ -9,8 +9,7 @@ import static org.junit.Assert.*;
 public class CoreTest {
     @Test
     public void jsonToMap() throws Exception {
-        Core core = new Core();
-       }
+    }
 
     @Test
     public void init() throws Exception {
@@ -34,6 +33,13 @@ public class CoreTest {
 
     @Test
     public void getDataFromURL() throws Exception {
+        Core core = new Core();
+        List<String> cites = core.getDataFromFile();
+
+        for (String city : cites) {
+            String urlString = core.createStringURL(city);
+            assertTrue(urlString.startsWith("http://api.openweathermap.org/data/2.5/weather?q="));
+        }
     }
 
     @Test
